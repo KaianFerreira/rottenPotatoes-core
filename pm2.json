@@ -1,0 +1,6 @@
+{
+	"name": "rottenPotatoes backend",
+	"script": "server.js",
+	"autorestart": true,
+	"node_args": "--env-file=.env"
+}
