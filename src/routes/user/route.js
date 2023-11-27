@@ -1,6 +1,6 @@
 import express from 'express'
 import Joi from 'joi'
-import { create } from './model'
+import { create, validate } from './model'
 
 const router = express.Router()
 
@@ -41,6 +41,28 @@ router.post('/', async (req, res) => {
 	} catch (error) {
 		console.log(error)
 		return res.status(400).send({ error: 'internal error' })
+	}
+})
+
+router.post('/signin', async (req, res) => {
+	try {
+		console.log('get /signin')
+
+		const schema = Joi.object().options({ abortEarly: false }).keys({
+			userName: Joi.string().required(),
+			password: Joi.string().regex(/^[a-zA-Z0-9]{6,20}$/).required(),
+		})
+
+		const { value, error } = schema.validate(req.body)
+
+		if (error) return res.status(400).send ({ error: 'invalidLogin or password', fields: [...error.details.map(field => field.path[0])]})
+
+		const valid = await validate(value.userName, value.password)
+
+		return res.status(200).send(valid)
+
+	} catch (error) {
+		console.log(error)
 	}
 })
 

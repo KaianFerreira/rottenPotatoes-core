@@ -15,6 +15,7 @@ app.use('/api', router)
 // import product from './routes/product/route'
 // import order from './routes/order/route'
 import user from './routes/user/route'
+import movie from './routes/movie/route'
 
 router.get('/ping', (req, res) => {
 	return res.send('pong no donetes')
@@ -23,6 +24,7 @@ router.get('/ping', (req, res) => {
 
 // router.use('/product', product)
 router.use('/user', user)
+router.use('/movie', movie)
 
 
 const port = process.env.PORT || 3000
