@@ -57,12 +57,20 @@ router.post('/signin', async (req, res) => {
 
 		if (error) return res.status(400).send ({ error: 'invalidLogin or password', fields: [...error.details.map(field => field.path[0])]})
 
-		const valid = await validate(value.userName, value.password)
-		console.log(valid.toJSON())
+		const user = await validate(value.userName, value.password)
 
-		if (!valid) res.status(404).send('not found')
-		else res.status(200).send(valid.toJSON())
-		return 
+		
+		if (!user) return res.status(404).send('not found')
+		const userObj = user.toJSON()
+		console.log(userObj)
+		
+		return res.status(200).send({
+			userName: userObj.userName,
+			name: userObj.user.name,
+			gender: userObj.gender,
+			age: userObj.age,
+			email: userObj.user.email
+		})
 
 	} catch (error) {
 		console.log(error)

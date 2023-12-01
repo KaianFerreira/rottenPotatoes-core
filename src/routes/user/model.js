@@ -45,12 +45,18 @@ export const create = async (
 	})
 
 	await user.save()
-	return user
+
+	return {
+		userName: user.userName,
+		name: user.user.name,
+		gender: user.gender,
+		age: user.age,
+		email: user.user.email
+	}
 }
 
 
 export const validate = async (username, password) => {
-	console.log(username, password)
 	return UserDetails.findOne({
 		include: [{ 
 			model: User,
