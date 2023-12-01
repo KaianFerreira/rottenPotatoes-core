@@ -18,6 +18,12 @@ export const getAll = async () => {
 	return movies
 }
 
+export const getById = async(id) => {
+	const movie = await Movie.findOne({ where: { id } })
+
+	return movie
+}
+
 export const create = async (
 	name,
 	imagem,

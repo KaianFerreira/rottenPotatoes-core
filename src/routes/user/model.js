@@ -51,7 +51,7 @@ export const create = async (
 
 export const validate = async (username, password) => {
 	console.log(username, password)
-	return !!UserDetails.findOne({
+	return UserDetails.findOne({
 		include: [{ 
 			model: User,
 			where: {
